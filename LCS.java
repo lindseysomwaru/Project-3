@@ -1,27 +1,49 @@
+import java.util.Scanner;
 public class LCS {
-    public static int lcs(String s1, String s2, int m, int n, int[][] table) {
-        if( m == 0 || n == 0)
-            return 0;
-        else if(table[m][n] != -1)
-            return table[m][n];
-        else if(s1.charAt(m-1) == s2.charAt(n-1)) {
-            table[m][n] = 1 + lcs(s1,s2,m-1,n-1,table);
-            return table[m][n];
+    public static void lcs(String s1, String s2, int length) {
+        int[][] table = new int[length+1][length+1];
+        for(int i=0; i <= length; i++)
+            for(int j=0; j <= length; j++) {
+                if( i == 0 || j == 0)
+                    table[i][j] = 0;
+                else if(s1.charAt(i-1) == s2.charAt(j-1))
+                    table[i][j] = table[i-1][j-1] + 1;
+                else
+                    table[i][j] = Math.max(table[i-1][j], table[i][j-1]);
+            }
+        int index = table[length][length];
+        int tmp = index;
+        char[] lcs = new char[index+1];
+        lcs[index] = '\0';
+        int i = length, j = length;
+        while( i > 0 && j > 0) {
+            if(s1.charAt(i-1) == s2.charAt(j-1)) {
+                lcs[index-1] = s1.charAt(i-1);
+                i--;
+                j--;
+                index--;
+            }
+            else if(table[i-1][j] > table[i][j-1])
+                i--;
+            else
+                j--;
         }
-        else {
-            table[m][n] = Math.max(lcs(s1,s2,m,n-1,table),lcs(s1,s2,m-1,n,table));
-            return table[m][n];
-        }
+        System.out.print("Sequence 1: " + s1 + "\nSequence 2: " + s2 + "\nLCS: ");
+        for(int k=0; k <= tmp; k++)
+            System.out.print(lcs[k]);
+        System.out.println();
+    }
+    public static String getUserInput() {
+        Scanner scanner = new Scanner(System.in);
+        String s;
+        System.out.print("Enter a string of length 6: ");
+        s = scanner.nextLine();
+        return s;
     }
     public static void main(String args []) {
-       String s1 = "AGGTAB";
-       String s2 = "GXTXAYB";
-       int m = s1.length();
-       int n = s2.length();
-       int[][] table = new int[m+1][n+1];
-       for(int i=0; i < m + 1; i++)
-            for(int j=0; j < n + 1; j++)
-                table[i][j] = -1;
-        System.out.println("Length of LCS is " + lcs(s1,s2,m,n,table));
+        final int SEQUENCE_LENGTH = 6;
+        String s1 = getUserInput();
+        String s2 = getUserInput();
+        lcs(s1,s2,SEQUENCE_LENGTH);
     }
 }
