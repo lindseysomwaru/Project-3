@@ -5,10 +5,15 @@ public class LCS {
         //stores solutions to previously computed subproblems
         int[][] table = new int[length+1][length+1];
 
+        System.out.println();
+        System.out.print("       ");
+        for(int i=0; i < s1.length(); i++)
+            System.out.print(s1.charAt(i) + "  ");
+        System.out.println();
         //fill table in bottom-up approach
-        for(int i=0; i <= length; i++) 
+        for(int i=0; i <= length; i++) {
+            System.out.println();
             for(int j=0; j <= length; j++) {
-                System.out.println("i: " + i + ", " + "j: " + j);
                 if(i == 0 || j == 0)
                     table[i][j] = 0;
                 //if current character of 2 strings match
@@ -16,8 +21,16 @@ public class LCS {
                     table[i][j] = table[i-1][j-1] + 1;
                 else
                     table[i][j] = Math.max(table[i-1][j], table[i][j-1]);
-                System.out.printf("Table[%d][%d]: %d\n\n", i,j,table[i][j]);
+                if(j == 0)
+                    if(i == 0)
+                        System.out.print("    " + table[i][j] + "  ");
+                    else
+                        System.out.print(s2.charAt(i-1) + "   " + table[i][j] + "  ");
+                else
+                    System.out.print(table[i][j] + "  ");
             }
+        }
+        System.out.println("\n");
         int index = table[length][length];
         int tmp = index;
         char[] lcs = new char[index+1];
@@ -62,5 +75,6 @@ public class LCS {
             System.out.println("STRING MUST BE LENGTH 6! TRY AGAIN!");
         else
             lcs(s1,s2,SEQUENCE_LENGTH);
+        System.out.println();
     }
 }
