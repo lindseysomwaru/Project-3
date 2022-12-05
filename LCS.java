@@ -6,8 +6,9 @@ public class LCS {
         int[][] table = new int[length+1][length+1];
 
         //fill table in bottom-up approach
-        for(int i=0; i <= length; i++)
+        for(int i=0; i <= length; i++) 
             for(int j=0; j <= length; j++) {
+                System.out.println("i: " + i + ", " + "j: " + j);
                 if(i == 0 || j == 0)
                     table[i][j] = 0;
                 //if current character of 2 strings match
@@ -15,8 +16,8 @@ public class LCS {
                     table[i][j] = table[i-1][j-1] + 1;
                 else
                     table[i][j] = Math.max(table[i-1][j], table[i][j-1]);
+                System.out.printf("Table[%d][%d]: %d\n\n", i,j,table[i][j]);
             }
-        
         int index = table[length][length];
         int tmp = index;
         char[] lcs = new char[index+1];
