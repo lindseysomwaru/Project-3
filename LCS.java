@@ -28,22 +28,28 @@ public class LCS {
             else
                 j--;
         }
-        System.out.print("Sequence 1: " + s1 + "\nSequence 2: " + s2 + "\nLCS: ");
-        for(int k=0; k <= tmp; k++)
-            System.out.print(lcs[k]);
+        if(lcs[0] == 0)
+            System.out.print("Sequence 1: " + s1 + "\nSequence 2: " + s2 + "\nLCS: none" + "\nLength of LCS: 0");
+        else {
+            System.out.print("Sequence 1: " + s1 + "\nSequence 2: " + s2 + "\nLCS: ");
+            int cnt = 0;
+            for(int k=0; k <= tmp; k++) {
+                cnt++;
+                System.out.print(lcs[k]);
+            }
+            System.out.print("\nLength of LCS: " + (cnt-1));
+        }
         System.out.println();
-    }
-    public static String getUserInput() {
-        Scanner scanner = new Scanner(System.in);
-        String s;
-        System.out.print("Enter a string of length 6: ");
-        s = scanner.nextLine();
-        return s;
     }
     public static void main(String args []) {
         final int SEQUENCE_LENGTH = 6;
-        String s1 = getUserInput();
-        String s2 = getUserInput();
+        Scanner scanner = new Scanner(System.in);
+        String s1, s2;
+        System.out.print("Enter a string of length 6: ");
+        s1 = scanner.nextLine();
+        System.out.print("Enter a string of length 6: ");
+        s2 = scanner.nextLine();
+        scanner.close();
         lcs(s1,s2,SEQUENCE_LENGTH);
     }
 }
